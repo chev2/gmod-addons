@@ -1,0 +1,7 @@
+"chevbhop"
+{
+	"base"			"base"
+	"title" 		"Simple Bunnyhop"
+	"menusystem"	"1"
+	"workshopid"	"1767781900"
+}

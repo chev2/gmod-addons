@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/weapons/weapon_ied_arabic/cameraphone"
+	"$bumpmap" "models/weapons/weapon_ied_arabic/cameraphone_n"
+	"$Selfillum" "1"
+}

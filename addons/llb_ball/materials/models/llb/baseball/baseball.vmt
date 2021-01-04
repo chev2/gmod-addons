@@ -1,0 +1,25 @@
+VertexLitGeneric
+{
+	$basetexture "models/llb/baseball/baseball"
+	$surfaceprop Rubber
+
+	$selfillumtint "[1 0 0]"
+	$selfillum 1
+	$selfillummask "models/llb/baseball/baseball_i"
+
+	$phong 1
+	$phongboost 0.2
+	$phongexponent 5
+	$phongfresnelranges "[0.2 0.8 0.1]"
+	$lightwarptexture "models/llb/baseball/lightwarp"
+	$nocull 1
+
+	$rimlight 1
+	$rimlightexponent 5
+	$rimlightboost 3
+
+	$blendtintbybasealpha "0"
+ 	$blendtintcoloroverbase "0"
+	
+	$model 1
+}
