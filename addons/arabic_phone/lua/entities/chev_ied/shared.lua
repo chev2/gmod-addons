@@ -17,13 +17,16 @@ AddCSLuaFile("shared.lua")
 function ENT:Initialize()
 	local soundtables = {["song02"] = 23.61, ["song03"] = 37.26, ["song04"] = 13.5, ["song05"] = 14.91, ["song06"] = 19.88}
 	local rlength, rsound = table.Random(soundtables)
-	self.nsound = CreateSound(self, "chev/arabicnokiaphone/"..rsound..".ogg")
-	if self.nsound then
-		self.nsound:PlayEx(0.4, 100)
+
+	self.MUSIC_VOLUME = 0.6
+
+	self.NokiaMusic = CreateSound(self, "chev/arabicnokiaphone/"..rsound..".ogg")
+	if self.NokiaMusic then
+		self.NokiaMusic:PlayEx(self.MUSIC_VOLUME, 100)
 		timer.Create("LoopNokiaSound", rlength, 0, function()
-			if self.nsound then
-				self.nsound:Stop()
-				self.nsound:PlayEx(0.4, 100)
+			if self.NokiaMusic then
+				self.NokiaMusic:Stop()
+				self.NokiaMusic:PlayEx(self.MUSIC_VOLUME, 100)
 			end
 		end)
 	end
@@ -65,7 +68,7 @@ function ENT:Explosion()
 	if not IsValid(self) then return end
 	if not IsValid(self.Owner) then
 		timer.Remove("LoopNokiaSound")
-		self.nsound:Stop()
+		self.NokiaMusic:Stop()
 		self.Entity:Remove()
 		return
 	end
@@ -84,11 +87,11 @@ function ENT:Explosion()
 	util.BlastDamage(self.Entity, self.Owner, self.Entity:GetPos(), 500, 170)
 	util.ScreenShake(self.Entity:GetPos(), 3000, 255, 2.25, 2000)
 	
-	self.Entity:EmitSound("ambient/explosions/explode_" .. math.random(1, 4) .. ".wav", self.Entity:GetPos(), 100, 100 )
+	self.Entity:EmitSound("ambient/explosions/explode_" .. math.random(1, 4) .. ".wav", 100, 100, 1, CHAN_AUTO)
 	local scorchstart = self.Entity:GetPos() + ((Vector(0,0,1)) * 5)
 	local scorchend = self.Entity:GetPos() + ((Vector(0,0,-1)) * 5)
 	timer.Remove("LoopNokiaSound")
-	self.nsound:Stop()
+	self.NokiaMusic:Stop()
 	self.Entity:Remove()
 	util.Decal("Scorch", scorchstart, scorchend)
 	
