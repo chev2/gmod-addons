@@ -163,9 +163,8 @@ function PANEL:Init()
     filterButtonLeft:SetTextColor(color_white)
     filterButtonLeft.Paint = BUTTON_PAINT
     filterButtonLeft.DoClick = function(panel)
-        self.CurrentFilter = (self.CurrentFilter - 1) % #FILTER_DATA
-
-        self.CurrentFilterLabel:SetText("Current Filter: " .. FILTER_DATA[self.CurrentFilter + 1].FilterName)
+        local newFilterIndex = (self.CurrentFilter - 1) % #FILTER_DATA
+        self:SelectFilter(newFilterIndex)
     end
 
     local filterButtonRight = vgui.Create("DButton", filterBase)
@@ -177,9 +176,8 @@ function PANEL:Init()
     filterButtonRight:SetTextColor(color_white)
     filterButtonRight.Paint = BUTTON_PAINT
     filterButtonRight.DoClick = function(panel)
-        self.CurrentFilter = (self.CurrentFilter + 1) % #FILTER_DATA
-
-        self.CurrentFilterLabel:SetText("Current Filter: " .. FILTER_DATA[self.CurrentFilter + 1].FilterName)
+        local newFilterIndex = (self.CurrentFilter + 1) % #FILTER_DATA
+        self:SelectFilter(newFilterIndex)
     end
 
     local currentFilterName = vgui.Create("DLabel", filterBase)
@@ -187,6 +185,20 @@ function PANEL:Init()
     currentFilterName:SetText("Current Filter: None")
     currentFilterName:Dock(FILL)
     currentFilterName:SetContentAlignment(5)
+
+    currentFilterName:SetMouseInputEnabled(true)
+    currentFilterName:SetCursor("hand")
+    currentFilterName.DoClick = function()
+        local dMenu = DermaMenu()
+
+        for index, filterEntryData in ipairs(screenshot_editor.GetFilters()) do
+            dMenu:AddOption(filterEntryData.FilterName, function()
+                self:SelectFilter(index - 1)
+            end)
+        end
+
+        dMenu:Open()
+    end
 
     self.CurrentFilterLabel = currentFilterName
 
@@ -214,9 +226,8 @@ function PANEL:Init()
     frameButtonLeft:SetTextColor(color_white)
     frameButtonLeft.Paint = BUTTON_PAINT
     frameButtonLeft.DoClick = function(panel)
-        self.CurrentFrame = (self.CurrentFrame - 1) % #FRAME_DATA
-
-        self.CurrentFrameLabel:SetText("Current Frame: " .. FRAME_DATA[self.CurrentFrame + 1].FrameName)
+        local newFrameIndex = (self.CurrentFrame - 1) % #FRAME_DATA
+        self:SelectFrame(newFrameIndex)
     end
 
     local frameButtonRight = vgui.Create("DButton", frameBase)
@@ -228,9 +239,8 @@ function PANEL:Init()
     frameButtonRight:SetTextColor(color_white)
     frameButtonRight.Paint = BUTTON_PAINT
     frameButtonRight.DoClick = function(panel)
-        self.CurrentFrame = (self.CurrentFrame + 1) % #FRAME_DATA
-
-        self.CurrentFrameLabel:SetText("Current Frame: " .. FRAME_DATA[self.CurrentFrame + 1].FrameName)
+        local newFrameIndex = (self.CurrentFrame + 1) % #FRAME_DATA
+        self:SelectFrame(newFrameIndex)
     end
 
     local currentFrameName = vgui.Create("DLabel", frameBase)
@@ -238,6 +248,21 @@ function PANEL:Init()
     currentFrameName:SetText("Current Frame: None")
     currentFrameName:Dock(FILL)
     currentFrameName:SetContentAlignment(5)
+
+    currentFrameName:SetMouseInputEnabled(true)
+    currentFrameName:SetCursor("hand")
+    currentFrameName.DoClick = function()
+        local dMenu = DermaMenu()
+
+        for index, frameEntryData in ipairs(screenshot_editor.GetFrames()) do
+            dMenu:AddOption(frameEntryData.FrameName, function()
+                self:SelectFrame(index - 1)
+            end)
+        end
+
+        dMenu:Open()
+    end
+
 
     self.CurrentFrameLabel = currentFrameName
 
@@ -385,6 +410,20 @@ function PANEL:Init()
     else
         self:AddScreenshotsToList()
     end
+end
+
+function PANEL:SelectFilter(index)
+    self.CurrentFilter = index
+
+    local filterData = screenshot_editor.GetFilter(self.CurrentFilter + 1)
+    self.CurrentFilterLabel:SetText("Current Filter: " .. filterData.FilterName)
+end
+
+function PANEL:SelectFrame(index)
+    self.CurrentFrame = index
+
+    local frameData = screenshot_editor.GetFrame(self.CurrentFrame + 1)
+    self.CurrentFrameLabel:SetText("Current Frame: " .. frameData.FrameName)
 end
 
 -- Add screenshots to the DListView
