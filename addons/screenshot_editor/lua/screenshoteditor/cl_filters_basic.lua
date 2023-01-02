@@ -3,11 +3,15 @@
     Comic Book
 
 ]]
-local CB_COLOR_1 = color_white:ToVector()
-local CB_COLOR_2_TOP = Vector(1, 0.96, 0.28)
-local CB_COLOR_2_BOTTOM = Vector(0.24, 0.622, 0.88)
-local CB_COLOR_3_TOP = Color(142, 45, 226):ToVector()
-local CB_COLOR_3_BOTTOM = Color(74, 0, 224):ToVector()
+local CB_COLOR_PLAIN = color_white:ToVector()
+local CB_COLOR_BLAZE_TOP = Vector(1, 0.96, 0.28)
+local CB_COLOR_BLAZE_BOTTOM = Vector(0.24, 0.622, 0.88)
+local CB_COLOR_AMIN_TOP = Color(142, 45, 226):ToVector()
+local CB_COLOR_AMIN_BOTTOM = Color(74, 0, 224):ToVector()
+local CB_COLOR_WH_TOP = Color(195, 20, 50):ToVector()
+local CB_COLOR_WH_BOTTOM = Color(36, 11, 54):ToVector()
+local CB_COLOR_FLARE_TOP = Color(241, 39, 17):ToVector()
+local CB_COLOR_FLARE_BOTTOM = Color(245, 175, 25):ToVector()
 
 local ComicBookBuffer = GetRenderTarget("ComicBookBuffer", ScrW(), ScrH())
 local MaterialComicBookBuffer = MaterialComicBookBuffer or CreateMaterial("ComicBookScreen", "UnlitGeneric", {
@@ -486,29 +490,46 @@ hook.Add("ScreenshotEditorInitialize", "ScreenshotEditor_AddBasicFilters", funct
             DrawTexturize(1, MAT_TEXTURIZE_OCEANIC)
         end
     })
+
+    screenshot_editor.AddFilter({
+        FilterName = "Comic Book (Plain)",
         FilterCallback = function(width, height, mat)
-            DrawComicBookNoBuffer(0.1, CB_COLOR_1, CB_COLOR_1, mat)
+            DrawComicBookNoBuffer(0.1, CB_COLOR_PLAIN, CB_COLOR_PLAIN, mat)
         end
     })
 
     screenshot_editor.AddFilter({
-        FilterName = "Comic Book #2",
+        FilterName = "Comic Book (Blaze)",
         FilterCallback = function(width, height, mat)
-            DrawComicBookNoBuffer(0.1, CB_COLOR_2_TOP, CB_COLOR_2_BOTTOM, mat)
+            DrawComicBookNoBuffer(0.1, CB_COLOR_BLAZE_TOP, CB_COLOR_BLAZE_BOTTOM, mat)
         end
     })
 
     screenshot_editor.AddFilter({
-        FilterName = "Comic Book #3",
+        FilterName = "Comic Book (Amin)",
         FilterCallback = function(width, height, mat)
-            DrawComicBookNoBuffer(0.1, CB_COLOR_3_TOP, CB_COLOR_3_BOTTOM, mat)
+            DrawComicBookNoBuffer(0.1, CB_COLOR_AMIN_TOP, CB_COLOR_AMIN_BOTTOM, mat)
+        end
+    })
+
+    screenshot_editor.AddFilter({
+        FilterName = "Comic Book (Witching Hour)",
+        FilterCallback = function(width, height, mat)
+            DrawComicBookNoBuffer(0.1, CB_COLOR_WH_TOP, CB_COLOR_WH_BOTTOM, mat)
+        end
+    })
+
+    screenshot_editor.AddFilter({
+        FilterName = "Comic Book (Flare)",
+        FilterCallback = function(width, height, mat)
+            DrawComicBookNoBuffer(0.1, CB_COLOR_FLARE_TOP, CB_COLOR_FLARE_BOTTOM, mat)
         end
     })
 
     screenshot_editor.AddFilter({
         FilterName = "High Contrast",
         FilterCallback = function(width, height, mat)
-            DrawComicBookNoBuffer(0.1, CB_COLOR_1, CB_COLOR_1, mat)
+            DrawComicBookNoBuffer(0.1, CB_COLOR_PLAIN, CB_COLOR_PLAIN, mat)
 
             DrawNegative()
 
@@ -529,7 +550,7 @@ hook.Add("ScreenshotEditorInitialize", "ScreenshotEditor_AddBasicFilters", funct
     screenshot_editor.AddFilter({
         FilterName = "FAITH",
         FilterCallback = function(width, height, mat)
-            DrawComicBookNoBuffer(0.1, CB_COLOR_1, CB_COLOR_1, mat)
+            DrawComicBookNoBuffer(0.1, CB_COLOR_PLAIN, CB_COLOR_PLAIN, mat)
 
             DrawNegative()
 
