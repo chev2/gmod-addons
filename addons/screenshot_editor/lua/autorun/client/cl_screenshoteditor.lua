@@ -160,4 +160,4 @@ hook.Add("Initialize", "RunScreenshotEditorInitialize", function()
     hook.Run("ScreenshotEditorInitialize")
 end)
 
-hook.Run("ScreenshotEditorInitialize")
+--if game.GetWorld() ~= NULL then hook.Run("ScreenshotEditorInitialize") end
