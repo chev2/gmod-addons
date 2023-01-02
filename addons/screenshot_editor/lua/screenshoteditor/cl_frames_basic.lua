@@ -75,4 +75,8 @@ hook.Add("ScreenshotEditorInitialize", "ScreenshotEditor_AddBasicFrames", functi
         FrameName = "Clearly you don't own an air fryer",
         MaterialPath = "chev/frames/air_fryer_demotivator.png"
     })
+    screenshot_editor.AddFrame({
+        FrameName = "To Be Continued",
+        MaterialPath = "chev/frames/to_be_continued.png"
+    })
 end)
