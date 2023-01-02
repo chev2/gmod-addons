@@ -75,10 +75,20 @@ end
     Texturize
 
 ]]
+-- Native to Garry's Mod
 local MAT_TEXTURIZE_PATTERN1 = Material("pp/texturize/pattern1.png")
 local MAT_TEXTURIZE_LINES = Material("pp/texturize/lines.png")
 local MAT_TEXTURIZE_RAINBOW = Material("pp/texturize/rainbow.png")
 local MAT_TEXTURIZE_SQUAREDO = Material("pp/texturize/squaredo.png")
+local MAT_TEXTURIZE_PINKO = Material("pp/texturize/pinko.png")
+local MAT_TEXTURIZE_PLAIN = Material("pp/texturize/plain.png")
+
+-- Custom
+local MAT_TEXTURIZE_80S = Material("pp/texturize/80s.png")
+local MAT_TEXTURIZE_ACIDIC = Material("pp/texturize/acidic.png")
+local MAT_TEXTURIZE_CHECKER = Material("pp/texturize/checker.png")
+local MAT_TEXTURIZE_INVERT = Material("pp/texturize/invert.png")
+local MAT_TEXTURIZE_OCEANIC = Material("pp/texturize/oceanic.png")
 
 --[[
 
@@ -360,35 +370,81 @@ hook.Add("ScreenshotEditorInitialize", "ScreenshotEditor_AddBasicFilters", funct
     })
 
     screenshot_editor.AddFilter({
-        FilterName = "Texturize #1",
+        FilterName = "Texturize (Pattern #1)",
         FilterCallback = function(width, height, mat)
             DrawTexturize(1, MAT_TEXTURIZE_PATTERN1)
         end
     })
 
     screenshot_editor.AddFilter({
-        FilterName = "Texturize #2",
+        FilterName = "Texturize (Lines)",
         FilterCallback = function(width, height, mat)
             DrawTexturize(1, MAT_TEXTURIZE_LINES)
         end
     })
 
     screenshot_editor.AddFilter({
-        FilterName = "Texturize #3",
+        FilterName = "Texturize (Rainbow)",
         FilterCallback = function(width, height, mat)
             DrawTexturize(1, MAT_TEXTURIZE_RAINBOW)
         end
     })
 
     screenshot_editor.AddFilter({
-        FilterName = "Texturize #4",
+        FilterName = "Texturize (Squaredo)",
         FilterCallback = function(width, height, mat)
             DrawTexturize(1, MAT_TEXTURIZE_SQUAREDO)
         end
     })
 
     screenshot_editor.AddFilter({
-        FilterName = "Comic Book #1",
+        FilterName = "Texturize (Pinko)",
+        FilterCallback = function(width, height, mat)
+            DrawTexturize(1, MAT_TEXTURIZE_PINKO)
+        end
+    })
+
+    screenshot_editor.AddFilter({
+        FilterName = "Texturize (Plain)",
+        FilterCallback = function(width, height, mat)
+            DrawTexturize(1, MAT_TEXTURIZE_PLAIN)
+        end
+    })
+
+    screenshot_editor.AddFilter({
+        FilterName = "Texturize (80s)",
+        FilterCallback = function(width, height, mat)
+            DrawTexturize(1, MAT_TEXTURIZE_80S)
+        end
+    })
+
+    screenshot_editor.AddFilter({
+        FilterName = "Texturize (Acidic)",
+        FilterCallback = function(width, height, mat)
+            DrawTexturize(1, MAT_TEXTURIZE_ACIDIC)
+        end
+    })
+
+    screenshot_editor.AddFilter({
+        FilterName = "Texturize (Checker)",
+        FilterCallback = function(width, height, mat)
+            DrawTexturize(1, MAT_TEXTURIZE_CHECKER)
+        end
+    })
+
+    screenshot_editor.AddFilter({
+        FilterName = "Texturize (Invert)",
+        FilterCallback = function(width, height, mat)
+            DrawTexturize(1, MAT_TEXTURIZE_INVERT)
+        end
+    })
+
+    screenshot_editor.AddFilter({
+        FilterName = "Texturize (Oceanic)",
+        FilterCallback = function(width, height, mat)
+            DrawTexturize(1, MAT_TEXTURIZE_OCEANIC)
+        end
+    })
         FilterCallback = function(width, height, mat)
             DrawComicBookNoBuffer(0.1, CB_COLOR_1, CB_COLOR_1, mat)
         end
