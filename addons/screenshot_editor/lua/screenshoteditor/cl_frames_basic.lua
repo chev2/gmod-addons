@@ -10,6 +10,10 @@ hook.Add("ScreenshotEditorInitialize", "ScreenshotEditor_AddBasicFrames", functi
         MaterialPath = "chev/frames/vignette.png"
     })
     screenshot_editor.AddFrame({
+        FrameName = "Black Bars",
+        MaterialPath = "chev/frames/black_bars_219.png"
+    })
+    screenshot_editor.AddFrame({
         FrameName = "Action",
         MaterialPath = "chev/frames/action.png"
     })
