@@ -182,6 +182,32 @@ hook.Add("ScreenshotEditorInitialize", "ScreenshotEditor_AddBasicFilters", funct
                 ["$pp_colour_brightness"] = 0,
                 ["$pp_colour_contrast"] = 1,
                 ["$pp_colour_colour"] = 0,
+
+    screenshot_editor.AddFilter({
+        FilterName = "Sepia",
+        FilterCallback = function(width, height)
+            DrawColorModify({
+                ["$pp_colour_addr"] = 0,
+                ["$pp_colour_addg"] = 0,
+                ["$pp_colour_addb"] = 0,
+                ["$pp_colour_brightness"] = 0,
+                ["$pp_colour_contrast"] = 1,
+                ["$pp_colour_colour"] = 0,
+                ["$pp_colour_mulr"] = 0,
+                ["$pp_colour_mulg"] = 0,
+                ["$pp_colour_mulb"] = 0
+            })
+
+            DrawColorModify({
+                ["$pp_colour_addr"] = 175 / 255,
+                ["$pp_colour_addg"] = 155 / 255,
+                ["$pp_colour_addb"] = 137 / 255,
+                ["$pp_colour_brightness"] = -0.6,
+                ["$pp_colour_contrast"] = 0.95,
+                ["$pp_colour_colour"] = 1,
+                ["$pp_colour_mulr"] = 0,
+                ["$pp_colour_mulg"] = 0,
+                ["$pp_colour_mulb"] = 0
             })
         end
     })
