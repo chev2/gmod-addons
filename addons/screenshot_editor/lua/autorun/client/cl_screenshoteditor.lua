@@ -156,8 +156,15 @@ concommand.Add("screenshot_editor", function(ply, cmd, args, argStr)
     screenshot_editor.PANEL = mainWindow
 end)
 
-hook.Add("Initialize", "RunScreenshotEditorInitialize", function()
-    hook.Run("ScreenshotEditorInitialize")
-end)
+local function InitializeScreenshotEditorHook()
+    table.Empty(FILTER_DATA)
+    table.Empty(FRAME_DATA)
 
---if game.GetWorld() ~= NULL then hook.Run("ScreenshotEditorInitialize") end
+    hook.Run("ScreenshotEditorInitialize")
+end
+
+hook.Add("Initialize", "RunScreenshotEditorInitialize_OnGamemodeInitialize", InitializeScreenshotEditorHook)
+hook.Add("OnReloaded", "RunScreenshotEditorInitialize_OnReloaded", InitializeScreenshotEditorHook)
+
+-- Debug autorefresh
+if game.GetWorld() ~= NULL then InitializeScreenshotEditorHook() end
