@@ -1,0 +1,6 @@
+{
+    "title": "gm_construct_flipped",
+    "type": "map",
+    "tags": ["build", "fun"],
+    "ignore": ["*.vmf"]
+}

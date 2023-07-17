@@ -1,0 +1,11 @@
+{
+    "title": "cinema_construct",
+    "type": "map",
+    "tags": ["build", "movie"],
+    "ignore":
+    [
+        "*.psd",
+        "*.vcproj",
+        "*.svn*"
+    ]
+}

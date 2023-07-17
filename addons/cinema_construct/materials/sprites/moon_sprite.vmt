@@ -1,0 +1,9 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "sprites/moon_sprite"
+	"$additive" "1"
+	"$translucent" "1"
+	"$vertexcolor" "1"
+	"$vertexalpha" "1"
+	"$ignorez" "1"
+}
