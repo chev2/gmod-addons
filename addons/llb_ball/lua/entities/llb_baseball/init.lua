@@ -11,6 +11,7 @@ ENT.ServingPitch = false
 
 util.AddNetworkString("llb_baseball.DrawInvertedColors")
 util.AddNetworkString("llb_baseball.ChangeBallColor")
+util.AddNetworkString("llb_baseball.ScreenShake")
 
 local NEW_VEL_VECTOR = Vector()
 
@@ -80,7 +81,7 @@ function ENT:PhysicsCollide(data, physobj)
     if data.DeltaTime > 0.02 then
         sound.Play(self.BounceSound, self:GetPos(), 80, 100, 1)
 
-        util.ScreenShake(self:GetPos(), 2, 4, 0.2, 1500)
+        self:ScreenShake(2, 4, 0.2, 1500)
     end
 end
 
@@ -162,13 +163,13 @@ function ENT:OnTakeDamage(dmginfo)
             net.SendPVS(self:GetPos())
 
         sound.Play(self.StrongHitSound, self:GetPos(), 80, 100, 1)
-        util.ScreenShake(self:GetPos(), 25, 4, ballPauseTime, 300)
+        self:ScreenShake(25, 4, ballPauseTime, 300)
     elseif speed > 500 then
         sound.Play(self.StrongHitSound, self:GetPos(), 80, 100, 1)
-        util.ScreenShake(self:GetPos(), 20, 4, ballPauseTime, 300)
+        self:ScreenShake(20, 4, ballPauseTime, 300)
     else
         sound.Play(self.HitSound, self:GetPos(), 80, speed * 0.0295 + 100, 1)
-        util.ScreenShake(self:GetPos(), 2, 4, ballPauseTime, 300)
+        self:ScreenShake(2, 4, ballPauseTime, 300)
     end
 
     -- Lock the player until ball unfreezes.
@@ -214,7 +215,7 @@ function ENT:StartTouch(ent)
         dmginf:SetDamageForce(Vector(0, 0, 1))
         ent:TakeDamageInfo(dmginf)
 
-        util.ScreenShake(self:GetPos(), 2, 30, 0.5, 300)
+        self:ScreenShake(2, 30, 0.5, 300)
 
         -- If player is still alive after taking damage
         if ent:Health() > 0 then
@@ -231,4 +232,17 @@ function ENT:StartTouch(ent)
             sound.Play(self.KnockoutSound, self:GetPos(), 80, 100, 1)
         end
     end
+end
+
+function ENT:ScreenShake(amplitude, frequency, duration, radius)
+    --util.ScreenShake(self:GetPos(), amplitude, frequency, duration, radius, true)
+
+    -- New AirShake parameter only works on clientside at the moment, so we have to network it
+    net.Start("llb_baseball.ScreenShake")
+        net.WriteVector(self:GetPos())
+        net.WriteUInt(amplitude, 8)
+        net.WriteUInt(frequency, 8)
+        net.WriteFloat(duration)
+        net.WriteFloat(radius)
+        net.SendPVS(self:GetPos())
 end
