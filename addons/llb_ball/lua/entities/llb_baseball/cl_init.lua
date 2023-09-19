@@ -80,3 +80,13 @@ net.Receive("llb_baseball.DrawInvertedColors", function()
         end)
     end
 end)
+
+net.Receive("llb_baseball.ScreenShake", function()
+    local pos = net.ReadVector()
+    local amplitude = net.ReadUInt(8)
+    local frequency = net.ReadUInt(8)
+    local duration = net.ReadFloat()
+    local radius = net.ReadFloat()
+
+    util.ScreenShake(pos, amplitude, frequency, duration, radius, true)
+end)
