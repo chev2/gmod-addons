@@ -15,12 +15,18 @@ language.Add(
     "The threshold for the automatic flashlight to trigger. Higher values mean the flashlight will activate in brighter areas. Default: 0.0055"
 )
 
+language.Add("spawnmenu.options.autoflashlight.cvar.frequency", "Checking Frequency")
+language.Add(
+    "spawnmenu.options.autoflashlight.cvartooltip.frequency",
+    "How often Auto-Flashlight should check to see if the player is in darkness. Default: 0.4"
+)
+
 --
 -- ConVars, variables & functions
 --
 local CVAR_AUTO_FLASHLIGHT_ENABLED = CreateClientConVar(
     "cl_flashlight_auto",
-    "1",
+    1,
     true,
     false,
     language.GetPhrase("#spawnmenu.options.autoflashlight.cvartooltip.enabled")
@@ -28,12 +34,22 @@ local CVAR_AUTO_FLASHLIGHT_ENABLED = CreateClientConVar(
 
 local CVAR_AUTO_FLASHLIGHT_THRESHOLD = CreateClientConVar(
     "cl_flashlight_auto_threshold",
-    "0.0055",
+    0.0055,
     true,
     false,
     language.GetPhrase("#spawnmenu.options.autoflashlight.cvartooltip.threshold"),
     0,
     0.5
+)
+
+local CVAR_AUTO_FLASHLIGHT_FREQUENCY = CreateClientConVar(
+    "cl_flashlight_auto_frequency",
+    0.4,
+    true,
+    false,
+    language.GetPhrase("#spawnmenu.options.autoflashlight.cvartooltip.frequency"),
+    0.05,
+    2
 )
 
 local wasInDarkness = false
@@ -75,7 +91,7 @@ end
 --
 -- Main calculation/execution script
 --
-timer.Create("AutoFlashlight.DoToggle", 0.2, 0, function()
+local function AutoFlashlightDoToggle()
     if not CVAR_AUTO_FLASHLIGHT_ENABLED:GetBool() then return end
 
     local ply = LocalPlayer()
@@ -119,7 +135,17 @@ timer.Create("AutoFlashlight.DoToggle", 0.2, 0, function()
     end
 
     wasInDarkness = isInDarkness
-end)
+end
+
+timer.Create("AutoFlashlight.DoToggle", CVAR_AUTO_FLASHLIGHT_FREQUENCY:GetFloat(), 0, AutoFlashlightDoToggle)
+
+-- Recreate timer whenever flashlight frequency setting is adjusted
+cvars.AddChangeCallback("cl_flashlight_auto_frequency", function(convar, oldVal, newVal)
+    if not tonumber(newVal) then return end
+
+    timer.Create("AutoFlashlight.DoToggle", tonumber(newVal), 0, AutoFlashlightDoToggle)
+    AutoFlashlightDoToggle()
+end, "AutoFlashlight.RefreshFrequencyCVar")
 
 --
 -- Add Sandbox options menu
@@ -136,5 +162,8 @@ hook.Add("PopulateToolMenu", "AutoFlashlight.PopulateSpawnmenuCategory", functio
 
         pnl:NumSlider("#spawnmenu.options.autoflashlight.cvar.threshold", "cl_flashlight_auto_threshold", 0, 0.5, 4)
         pnl:ControlHelp("#spawnmenu.options.autoflashlight.cvartooltip.threshold")
+
+        pnl:NumSlider("#spawnmenu.options.autoflashlight.cvar.frequency", "cl_flashlight_auto_frequency", 0.05, 2, 2)
+        pnl:ControlHelp("#spawnmenu.options.autoflashlight.cvartooltip.frequency")
     end)
 end)
