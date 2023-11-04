@@ -18,5 +18,6 @@ Listed below is all of the addons you can find in this repo.
 - `ror2_hud`: A Risk of Rain 2-inspired replacement to the default HUD. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2210715789)
 - `screenshot_editor`: Lets you customize & save your Garry's Mod screenshots by applying effects and filters. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2910871996)
 - `simple_bunnyhop`: A gamemode designed for bunnyhopping. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=1767781900)
+- `spraymesh_extended`: An improvement to the original SprayMesh with various new features, bug fixes and optimizations. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3072351693)
 - `vector_loc`: A developer tool that allows you to visualize the locations of vector coordinates on a map. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=1782161573)
 - `vm_velocity`: Makes viewmodels move up and down depending on how fast you moving vertically. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2294290206)
