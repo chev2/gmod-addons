@@ -20,4 +20,4 @@ Listed below is all of the addons you can find in this repo.
 - `simple_bunnyhop`: A gamemode designed for bunnyhopping. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=1767781900)
 - `spraymesh_extended`: An improvement to the original SprayMesh with various new features, bug fixes and optimizations. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3072351693)
 - `vector_loc`: A developer tool that allows you to visualize the locations of vector coordinates on a map. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=1782161573)
-- `vm_velocity`: Makes viewmodels move up and down depending on how fast you moving vertically. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2294290206)
+- `vm_velocity`: Makes viewmodels move up and down depending on how fast you are moving vertically. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2294290206)
