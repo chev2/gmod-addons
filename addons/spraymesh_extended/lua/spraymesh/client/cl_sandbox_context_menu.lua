@@ -12,9 +12,9 @@ list.Set("DesktopWindows", "SprayMeshExtended", {
         -- Remove basic frame and replace with our custom VGUI element
         window:Remove()
 
-        if IsValid(screenshot_editor.PANEL) then screenshot_editor.PANEL:Remove() end
+        if IsValid(spraymesh.SETTINGS_PANEL) then spraymesh.SETTINGS_PANEL:Remove() end
         local mainWindow = vgui.Create("DSprayConfiguration")
-        screenshot_editor.PANEL = mainWindow
+        spraymesh.SETTINGS_PANEL = mainWindow
 
         icon.Window = mainWindow
     end

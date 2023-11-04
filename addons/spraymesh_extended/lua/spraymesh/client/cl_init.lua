@@ -951,10 +951,10 @@ concommand.Add("spraymesh_reload", function()
     spraymesh.ReloadSprays()
 end)
 
-local SETTINGS_PANEL = nil
+spraymesh.SETTINGS_PANEL = nil
 concommand.Add("spraymesh_settings", function()
-    if IsValid(SETTINGS_PANEL) then SETTINGS_PANEL:Close() end
-    SETTINGS_PANEL = vgui.Create("DSprayConfiguration")
+    if IsValid(spraymesh.SETTINGS_PANEL) then spraymesh.SETTINGS_PANEL:Remove() end
+    spraymesh.SETTINGS_PANEL = vgui.Create("DSprayConfiguration")
 end)
 
 local VIEWER_PANEL = nil
