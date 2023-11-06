@@ -127,22 +127,7 @@ function PANEL:Init()
     end
 
     self.SavedSpraySearch.OnValueChange = function(panel, text)
-        for url, sprayPanel in pairs(self.Sprays) do
-            -- Since spray panels are wrapped inside a parent, we want to target visibility for the parent instead
-            local panelParent = sprayPanel:GetParent()
-
-            local queryIsEmpty = string.Trim(text, " ") == ""
-            local textInURL = string.find(url:lower(), text:lower(), 0, true) ~= nil
-            local textInName = string.find(sprayPanel.Name:lower(), text:lower(), 0, true) ~= nil
-
-            if queryIsEmpty or textInURL or textInName then
-                panelParent:SetVisible(true)
-            else
-                panelParent:SetVisible(false)
-            end
-        end
-
-        self.IconLayout:Layout()
+        self:FilterSearch(text)
     end
 
     self.Scroll = self.SavedSpraysPanel:Add("DScrollPanel")
@@ -436,7 +421,7 @@ function PANEL:AddSpray(url, name)
                     "Confirmation:",
                     "Delete",
                     function()
-                        self.Sprays[panel.URL] = nil
+                        self.Sprays["https://" .. panel.URL] = nil
 
                         spraylist.RemoveSpray("https://" .. panel.URL)
 
@@ -492,6 +477,36 @@ function PANEL:AddSpray(url, name)
 
     for index, panel in ipairs(sortedChildrenTb) do
         panel:SetZPos(index)
+    end
+
+    self.IconLayout:Layout()
+
+    -- Gotta give time to let the newly-added entry and the IconLayout adjust their sizes, then
+    -- we adjust the DScrollPanel canvas size. From my tests, this is only necessary
+    -- when the player adds their FIRST spray to the list
+    timer.Simple(0, function()
+        if IsValid(self.Scroll) then
+            self.Scroll:InvalidateLayout()
+        end
+    end)
+end
+
+function PANEL:FilterSearch(text)
+    for url, sprayPanel in pairs(self.Sprays) do
+        if not IsValid(sprayPanel) then continue end
+
+        -- Since spray panels are wrapped inside a parent, we want to target visibility for the parent instead
+        local panelParent = sprayPanel:GetParent()
+
+        local queryIsEmpty = string.Trim(text, " ") == ""
+        local textInURL = string.find(url:lower(), text:lower(), 0, true) ~= nil
+        local textInName = string.find(sprayPanel.Name:lower(), text:lower(), 0, true) ~= nil
+
+        if queryIsEmpty or textInURL or textInName then
+            panelParent:SetVisible(true)
+        else
+            panelParent:SetVisible(false)
+        end
     end
 
     self.IconLayout:Layout()
