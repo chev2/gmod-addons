@@ -995,3 +995,23 @@ concommand.Add("spraymesh_shownames", function(ply, cmd, args, argstr)
         print(([[%s %s]]):format(plyStr, URLStr))
     end
 end)
+
+if spraymesh.DEBUG_MODE then
+    concommand.Add("spraymesh_debug_place", function()
+        local tr = LocalPlayer():GetEyeTrace()
+
+        local sprayData = {
+            SteamID64 = "DEBUG_" .. util.SHA1(CurTime()),
+            PlayerName = "Debug Spray " .. CurTime(),
+            HitPos = tr.HitPos,
+            HitNormal = tr.HitNormal,
+            TraceNormal = tr.Normal,
+            URL = spraymesh.SPRAY_URL_DEFAULT,
+            CoordDistance = spraymesh.COORD_DIST_DEFAULT,
+            SprayTime = CurTime(),
+            PlaySpraySound = true
+        }
+
+        spraymesh.PlaceSpray(sprayData)
+    end)
+end
