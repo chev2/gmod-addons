@@ -107,6 +107,13 @@ function PLAYER:AllowImmediateDecalPainting(allow)
     return OldAllowImmediateDecalPainting(self, allow)
 end
 
+local TOOL_TEXTURES = {
+    ["tools/toolsinvisible"] = true,
+    ["tools/toolsskybox"] = true,
+    ["tools/toolsskybox2d"] = true,
+    ["tools/toolsclip"] = true
+}
+
 -- The default, built-in spray gets overriden here
 hook.Add("PlayerSpray", "SprayMesh.OverrideNativeSpray", function(ply)
     spraymesh.DebugPrint("playerspray")
@@ -136,8 +143,8 @@ hook.Add("PlayerSpray", "SprayMesh.OverrideNativeSpray", function(ply)
             end
         })
 
-        -- No spraying on invisible walls
-        if tr.HitTexture:lower() == "tools/toolsinvisible" then return true end
+        -- No spraying on invisible walls/tool textures
+        if TOOL_TEXTURES[tr.HitTexture:lower()] then return true end
 
         ply.LastSprayTime = CurTime()
 
