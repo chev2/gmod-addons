@@ -361,9 +361,10 @@ local MAT_FAKE_TRANSPARENT = Material("spraymesh/fake_transparent.png", "noclamp
 
 function PANEL:AddSpray(url, name)
     -- If the spray already exists
-    if self.Sprays[url] then
-        self.IconLayout:Layout()
-        return
+    local existingSpray = self.Sprays[url]
+    if existingSpray and IsValid(existingSpray) and IsValid(existingSpray:GetParent()) then
+        existingSpray:GetParent():Remove()
+        self.Sprays[url] = nil
     end
 
     -- A transparency grid background, to indicate which sprays are transparent
