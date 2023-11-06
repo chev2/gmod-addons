@@ -45,5 +45,5 @@ end
 function spraylist.GetSprays()
     local queryResults = sql.Query("SELECT url, name FROM spraymesh_extended_spray_list ORDER BY name DESC")
 
-    return queryResults
+    return queryResults or {}
 end

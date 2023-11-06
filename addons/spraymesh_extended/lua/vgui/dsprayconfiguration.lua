@@ -154,11 +154,14 @@ function PANEL:Init()
     self.IconLayout:SetSpaceY(sprayLayoutSpace)
 
     -- Load saved sprays
-    for _, savedSprayData in ipairs(spraylist.GetSprays()) do
-        local url = savedSprayData.url
-        local name = savedSprayData.name
+    local savedSprays = spraylist.GetSprays()
+    if savedSprays and #savedSprays > 0 then
+        for _, savedSprayData in ipairs(savedSprays) do
+            local url = savedSprayData.url
+            local name = savedSprayData.name
 
-        self:AddSpray(url, name)
+            self:AddSpray(url, name)
+        end
     end
 
     --
