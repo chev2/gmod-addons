@@ -909,34 +909,33 @@ end)
 
 -- Coroutine function; used to reload sprays with spraymesh_reload
 local function cycleReloadSprays()
-    for id64, data in pairs(SPRAY_RELOAD_QUEUE) do
-        print(("Reloading spray for %s (%s) at %s"):format(id64, data.PlayerName, data.hitpos))
+    local id64, data = next(SPRAY_RELOAD_QUEUE)
+    if not id64 then return end
 
-        local sprayData = {
-            SteamID64 = id64,
-            PlayerName = data.PlayerName,
-            HitPos = data.hitpos,
-            HitNormal = data.hitnormal,
-            TraceNormal = data.TraceNormal,
-            URL = data.url,
-            CoordDistance = data.CoordDistance,
-            SprayTime = data.Time,
-            PlaySpraySound = false
-        }
+    print(("Reloading spray for %s (%s) at %s"):format(id64, data.PlayerName, data.hitpos))
 
-        spraymesh.PlaceSpray(sprayData)
+    local sprayData = {
+        SteamID64 = id64,
+        PlayerName = data.PlayerName,
+        HitPos = data.hitpos,
+        HitNormal = data.hitnormal,
+        TraceNormal = data.TraceNormal,
+        URL = data.url,
+        CoordDistance = data.CoordDistance,
+        SprayTime = data.Time,
+        PlaySpraySound = false
+    }
 
-        SPRAY_RELOAD_QUEUE[id64] = nil
+    spraymesh.PlaceSpray(sprayData)
 
-        coroutine.yield()
+    SPRAY_RELOAD_QUEUE[id64] = nil
 
-        break
-    end
+    coroutine.yield()
 end
 
 local sprayThread = nil
-hook.Add("Think", "SprayMesh.ManageSpraysCoroutine", function()
-    if (not sprayThread or not coroutine.resume(sprayThread)) and not table.IsEmpty(SPRAY_RELOAD_QUEUE) then
+hook.Add("Think", "SprayMesh.ManageSprayReloadCoroutine", function()
+    if (not sprayThread or not coroutine.resume(sprayThread)) and next(SPRAY_RELOAD_QUEUE) then
         sprayThread = coroutine.create(cycleReloadSprays)
 
         coroutine.resume(sprayThread)
