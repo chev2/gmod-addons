@@ -13,7 +13,7 @@
 -- Default spray, often used when player's current spray is invalid or they otherwise haven't set a spray yet
 spraymesh.SPRAY_URL_DEFAULT = "files.catbox.moe/xsdikl.png"
 
--- Units between points (default: 2); resXcoorddist = the dimensions (size) of all player sprays
+-- Units between points (default: 1.75). The dimensions (size) of all player sprays
 -- Bigger values means spray sizes will increase
 spraymesh.COORD_DIST_DEFAULT = 1.75
 
