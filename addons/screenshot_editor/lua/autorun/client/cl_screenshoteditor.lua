@@ -3,28 +3,42 @@ screenshot_editor = screenshot_editor or {}
 local SCREENSHOT_FILES = {}
 local SCREENSHOT_ITERATE_ACTIVE = false
 
--- Not a fantastic method, but it's a little smoother than file.Find("*.*")
+-- We check filenames that start with these characters in IterateScreenshotFiles()
+local charCheckList = {}
+
+for i = 65, 65 + 25 do charCheckList[#charCheckList + 1] = string.char(i) end
+for i = 97, 97 + 25 do charCheckList[#charCheckList + 1] = string.char(i) end
+for i = 0, 9 do charCheckList[#charCheckList + 1] = tostring(i) end
+table.Add(charCheckList, {"_", "-", "(", ")", " "})
+
+-- Not a fantastic method, but it's smoother than file.Find("*.*")
 local function IterateScreenshotFiles()
     local fileQueue = {}
 
     --local ctime = SysTime()
 
     -- a through z
-    for i = 97, 97 + 25 do
-        for j = 97, 97 + 25 do
-            local fileBeginner = string.char(i, j)
+    -- ! LIMITATION: This will skip over filenames NOT starting with these characters.
+    --      ! - this is a small edge case, as maps and screenshots usually shouldn't start with weird characters..
+    for i = 1, #charCheckList do
+        for j = 1, #charCheckList do
+            local char1 = charCheckList[i]
+            local char2 = charCheckList[j]
+
+            local fileBeginner = char1 .. char2
 
             local foundScreenshotFiles = file.Find("screenshots/" .. fileBeginner .. "*.*", "MOD")
             table.Add(fileQueue, foundScreenshotFiles)
 
-            --[[if #foundScreenshotFiles > 0 then
-                print(fileBeginner, #foundScreenshotFiles)
-            end]]
-
-            coroutine.yield()
+            -- if #foundScreenshotFiles > 0 then
+            --     print(fileBeginner, #foundScreenshotFiles)
+            -- end
         end
+
+        coroutine.yield()
     end
 
+    -- Organize files by modified time, so more recently-created screenshots appear at the top of the UI
     while #fileQueue > 0 do
         for i = 1, 200 do
             if #fileQueue == 0 then continue end
