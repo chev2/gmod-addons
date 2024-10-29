@@ -881,8 +881,8 @@ hook.Add("PostDrawHUD", "SprayMesh.GenerateSprayPlaceholderTextures", function()
 end)
 
 -- Draw meshes for all player sprays
-hook.Add("PostDrawTranslucentRenderables", "SprayMesh.DrawSprays", function(isDrawingDepth, isDrawingSkybox, isDrawing3DSkybox)
-    if isDrawingDepth then return end
+hook.Add("PreDrawTranslucentRenderables", "SprayMesh.DrawSprays", function(isDrawingDepth, isDrawingSkybox, isDrawing3DSkybox)
+    if isDrawingDepth or isDrawingSkybox then return end
 
     -- If render order doesn't exist yet, rebuild it
     if not spraymesh.RENDER_ITER_CLIENT then
