@@ -67,10 +67,11 @@ function DISPLAY:Init()
     self.NameDisplay:DockMargin(0, 0, 0, 4)
     self.NameDisplay:Dock(BOTTOM)
 
-    self.ImageDisplay = vgui.Create("DHTML", self)
-    self.ImageDisplay:SetAllowLua(false)
-    self.ImageDisplay:Dock(FILL)
+    -- Placeholder image
+    self.ImageDisplay = vgui.Create("DPanel", self)
     self.ImageDisplay:SetMouseInputEnabled(false)
+    self.ImageDisplay:Dock(FILL)
+    self.ImageDisplay.Paint = nil
 
     self:SetSize(self.SprayPreviewSize + 8, self.SprayPreviewSize + 32 + 8)
 end
@@ -104,14 +105,8 @@ function DISPLAY:OnMousePressed(keyCode)
 end
 
 function DISPLAY:Paint(w, h)
-    local padding = 4
-
     surface.SetDrawColor(0, 0, 0, 200)
     surface.DrawRect(0, 0, w, h)
-
-    surface.SetDrawColor(255, 255, 255, 255)
-    surface.SetMaterial(MAT_FAKE_TRANSPARENT)
-    surface.DrawTexturedRect(padding, padding, w - (padding * 2), h - 32 - (padding * 2))
 end
 
 function DISPLAY:SetURL(url)
@@ -121,8 +116,26 @@ function DISPLAY:SetURL(url)
 
     self.URL = url
 
-    local sprayHTML = spraymesh_derma_utils.GetPreviewHTML(self.SprayPreviewSize, url)
-    self.ImageDisplay:SetHTML(sprayHTML)
+    local sprayPanel = spraymesh_derma_utils.GetPreviewPanel(url)
+
+    self.ImageDisplay.Material = sprayPanel:GetHTMLMaterial()
+    self.ImageDisplay.Paint = function(panel, width, height)
+        surface.SetDrawColor(255, 255, 255, 255)
+        surface.SetMaterial(MAT_FAKE_TRANSPARENT)
+        surface.DrawTexturedRect(0, 0, width, height)
+
+        -- If the material isn't valid, continuously try to re-fetch the HTML IMaterial
+        if not panel.Material then
+            if IsValid(sprayPanel) then
+                panel.Material = sprayPanel:GetHTMLMaterial()
+            end
+
+            return
+        end
+
+        surface.SetMaterial(panel.Material)
+        surface.DrawTexturedRect(0, 0, width, height)
+    end
 end
 
 -- Builds the caption (e.g. Player - 12345678)

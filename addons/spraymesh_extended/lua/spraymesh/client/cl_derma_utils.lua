@@ -68,8 +68,8 @@ local PREVIEW_HTML_BASE = [=[
             }
 
             img, video {
-                width: %spx;
-                height: %spx;
+                width: 100vw;
+                height: 100vh;
                 object-fit: contain;
             }
         </style>
@@ -84,7 +84,7 @@ local PREVIEW_HTML_IMAGE = [=[<img src="%s">]=]
 local PREVIEW_HTML_VIDEO = [=[<video src="%s" muted autoplay loop>]=]
 
 -- Gets preview HTML (HTML code only--no derma panel), to preview sprays using DHTML
-function spraymesh_derma_utils.GetPreviewHTML(previewSize, sprayURL)
+function spraymesh_derma_utils.GetPreviewHTML(sprayURL)
     local elementFormatted = ""
 
     if spraymesh.IsVideoExtension(sprayURL) then
@@ -100,8 +100,31 @@ function spraymesh_derma_utils.GetPreviewHTML(previewSize, sprayURL)
 
     return Format(
         PREVIEW_HTML_BASE,
-        previewSize,
-        previewSize,
         elementFormatted
     )
+end
+
+local PANEL_CACHE = {}
+
+-- Gets preview HTML (panel only), to preview sprays using DHTML
+function spraymesh_derma_utils.GetPreviewPanel(sprayURL)
+    local urlHash = util.SHA256(sprayURL)
+
+    if IsValid(PANEL_CACHE[urlHash]) then
+        return PANEL_CACHE[urlHash]
+    else
+        local htmlPanel = vgui.Create("DHTML")
+        htmlPanel:SetVisible(true)
+        htmlPanel:SetAlpha(0)
+        htmlPanel:SetAllowLua(false)
+        htmlPanel:SetMouseInputEnabled(false)
+        htmlPanel:SetKeyboardInputEnabled(false)
+
+        local htmlCode = spraymesh_derma_utils.GetPreviewHTML(sprayURL)
+        htmlPanel:SetHTML(htmlCode)
+
+        PANEL_CACHE[urlHash] = htmlPanel
+
+        return htmlPanel
+    end
 end

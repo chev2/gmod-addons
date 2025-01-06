@@ -367,22 +367,53 @@ function PANEL:AddSpray(url, name)
         self.Sprays[url] = nil
     end
 
-    -- A transparency grid background, to indicate which sprays are transparent
-    local newSprayTransparentBase = self.IconLayout:Add("DPanel")
-    newSprayTransparentBase:SetTooltip("Right-click for options")
-    newSprayTransparentBase:SetMouseInputEnabled(true)
-    newSprayTransparentBase:SetCursor("hand")
-    newSprayTransparentBase:SetSize(self.SprayPreviewSize, self.SprayPreviewSize)
+    local newSpray = self.IconLayout:Add("DPanel")
+    newSpray:SetSize(self.SprayPreviewSize, self.SprayPreviewSize)
+    newSpray:SetMouseInputEnabled(true)
+    newSpray:SetCursor("hand")
+    newSpray:SetTooltip("Right-click for options")
 
-    newSprayTransparentBase.URL = string.gsub(url, "https?://", "")
-    newSprayTransparentBase.Name = name
+    newSpray.URL = string.gsub(url, "https?://", "")
+    newSpray.Name = name
 
-    newSprayTransparentBase.Paint = function(panel, width, height)
+    local sprayPanel = spraymesh_derma_utils.GetPreviewPanel(url)
+
+    newSpray.Material = sprayPanel:GetHTMLMaterial()
+    newSpray.Paint = function(panel, width, height)
+        -- Draw transparency grid, so the user has a better idea of which parts
+        --  of the image are transparent
         surface.SetDrawColor(255, 255, 255, 255)
         surface.SetMaterial(MAT_FAKE_TRANSPARENT)
         surface.DrawTexturedRect(0, 0, width, height)
+
+        -- If the material isn't valid, continuously try to re-fetch the HTML IMaterial
+        if not panel.Material then
+            if IsValid(sprayPanel) then
+                panel.Material = sprayPanel:GetHTMLMaterial()
+            end
+
+            return
+        end
+
+        surface.SetMaterial(panel.Material)
+        surface.DrawTexturedRect(0, 0, width, height)
     end
-    newSprayTransparentBase.OnMousePressed = function(panel, keyCode)
+
+    newSpray.PaintOver = function(panel, width, height)
+        if panel.URL == self.URL_CVar:GetString() then
+            --surface.SetDrawColor(255, 255, 255, 30)
+            --surface.DrawRect(0, 0, width, height)
+
+            local blink = Lerp((math.sin(RealTime() * 5) + 1) / 2, 200, 255)
+
+            surface.SetDrawColor(255, blink, 0, 255)
+            surface.DrawOutlinedRect(0, 0, width, height, 6)
+        end
+
+        draw.WordBox(8, width / 2, height - 8, panel.Name, "DSprayConfiguration.SprayText", SPRAY_NAME_BG_COLOR, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
+    end
+
+    newSpray.OnMousePressed = function(panel, keyCode)
         if keyCode == MOUSE_LEFT then
             surface.PlaySound("ui/buttonclick.wav")
 
@@ -439,33 +470,6 @@ function PANEL:AddSpray(url, name)
             dmenu:Open()
         end
     end
-
-    local newSpray = newSprayTransparentBase:Add("DHTML")
-    newSpray:SetAllowLua(false)
-    newSpray:Dock(FILL)
-    newSpray:SetMouseInputEnabled(false)
-
-    local sprayHTML = spraymesh_derma_utils.GetPreviewHTML(self.SprayPreviewSize, url)
-    newSpray:SetHTML(sprayHTML)
-
-    newSpray.URL = string.gsub(url, "https?://", "")
-    newSpray.Name = name
-
-    newSpray.PaintOver = function(panel, width, height)
-        if panel.URL == self.URL_CVar:GetString() then
-            --surface.SetDrawColor(255, 255, 255, 30)
-            --surface.DrawRect(0, 0, width, height)
-
-            local blink = Lerp((math.sin(RealTime() * 5) + 1) / 2, 170, 255)
-
-            surface.SetDrawColor(0, 127, blink, 255)
-            surface.DrawOutlinedRect(0, 0, width, height, 6)
-        end
-
-        draw.WordBox(8, width / 2, height - 8, panel.Name, "DSprayConfiguration.SprayText", SPRAY_NAME_BG_COLOR, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
-    end
-
-    newSprayTransparentBase.Panel = newSpray
 
     self.Sprays[url] = newSpray
 
