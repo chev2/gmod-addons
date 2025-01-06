@@ -52,7 +52,6 @@ function spraymesh_derma_utils.EnableMaximizeButton(dframe)
     end
 end
 
--- Get preview HTML to preview sprays using DHTML
 local PREVIEW_HTML_BASE = [=[
 <!DOCTYPE html>
 <html>
@@ -84,6 +83,7 @@ local PREVIEW_HTML_BASE = [=[
 local PREVIEW_HTML_IMAGE = [=[<img src="%s">]=]
 local PREVIEW_HTML_VIDEO = [=[<video src="%s" muted autoplay loop>]=]
 
+-- Gets preview HTML (HTML code only--no derma panel), to preview sprays using DHTML
 function spraymesh_derma_utils.GetPreviewHTML(previewSize, sprayURL)
     local elementFormatted = ""
 
