@@ -81,7 +81,7 @@ local PREVIEW_HTML_BASE = [=[
 </html>
 ]=]
 
-local PREVIEW_HTML_IMAGE = [=[<img src="%s"]=]
+local PREVIEW_HTML_IMAGE = [=[<img src="%s">]=]
 local PREVIEW_HTML_VIDEO = [=[<video src="%s" muted autoplay loop>]=]
 
 function spraymesh_derma_utils.GetPreviewHTML(previewSize, sprayURL)
