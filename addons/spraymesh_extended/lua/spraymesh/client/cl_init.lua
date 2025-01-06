@@ -873,7 +873,8 @@ hook.Add("PostDrawHUD", "SprayMesh.GenerateSprayPlaceholderTextures", function()
             surface.SetDrawColor(255, 255, 0, 255)
             surface.DrawOutlinedRect(0, 0, ScrW(), ScrH(), 3)
 
-            draw.SimpleText("[sprays are disabled]", "DermaLarge", ScrW() / 2, ScrH() / 2, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Sprays are disabled.", "DermaLarge", ScrW() / 2, ScrH() / 2, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Use /spraymesh to re-enable them.", "DermaDefaultBold", ScrW() / 2, ScrH() / 2 + 32, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         cam.End2D()
     render.PopRenderTarget()
 
