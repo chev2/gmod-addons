@@ -497,24 +497,34 @@ function PANEL:AddSpray(url, name)
 end
 
 function PANEL:FilterSearch(text)
+    local numVisible = 0
+
+    local queryIsEmpty = string.Trim(text, " ") == ""
+
     for url, sprayPanel in pairs(self.Sprays) do
         if not IsValid(sprayPanel) then continue end
 
-        -- Since spray panels are wrapped inside a parent, we want to target visibility for the parent instead
-        local panelParent = sprayPanel:GetParent()
-
-        local queryIsEmpty = string.Trim(text, " ") == ""
         local textInURL = string.find(url:lower(), text:lower(), 0, true) ~= nil
         local textInName = string.find(sprayPanel.Name:lower(), text:lower(), 0, true) ~= nil
 
         if queryIsEmpty or textInURL or textInName then
-            panelParent:SetVisible(true)
+            sprayPanel:SetVisible(true)
+            numVisible = numVisible + 1
         else
-            panelParent:SetVisible(false)
+            sprayPanel:SetVisible(false)
         end
     end
 
     self.IconLayout:Layout()
+    self.Scroll.VBar:SetScroll(0)
+
+    -- Give self.IconLayout some time (the next frame) to relayout
+    -- Then, we can re-layout the scroll bar
+    timer.Simple(0, function()
+        if IsValid(self.Scroll) then
+            self.Scroll:Rebuild()
+        end
+    end)
 end
 
 -- Register control
