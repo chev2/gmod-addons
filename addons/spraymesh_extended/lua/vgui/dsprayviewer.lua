@@ -58,6 +58,7 @@ function DISPLAY:Init()
     self:DockPadding(4, 4, 4, 4)
     self:SetMouseInputEnabled(true)
     self:SetCursor("hand")
+    self:SetTooltip("Right-click to show options")
 
     self.NameDisplay = vgui.Create("DLabel", self)
     self.NameDisplay:SetFont("DSprayViewer.NameDisplay")

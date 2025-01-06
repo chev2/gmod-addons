@@ -371,7 +371,7 @@ function PANEL:AddSpray(url, name)
     newSpray:SetSize(self.SprayPreviewSize, self.SprayPreviewSize)
     newSpray:SetMouseInputEnabled(true)
     newSpray:SetCursor("hand")
-    newSpray:SetTooltip("Right-click for options")
+    newSpray:SetTooltip("Right-click to show options")
 
     newSpray.URL = string.gsub(url, "https?://", "")
     newSpray.Name = name
