@@ -11,6 +11,7 @@ Listed below is all of the addons you can find in this repo.
 - `gg_bathwater`: A joke SWEP that lets you drink gamer girl bath water. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=1798627065)
 - `gm_construct_flipped`: A variation of gm_construct that has been flipped about its axis. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2099599586)
 - `gm_krustykrab_night`: A nighttime version of the Krusty Krab from SpongeBob Squarepants, based off of the episode 'Graveyard Shift'. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2048870398)
+- `lets_take_a_look`: Adds something spookg that runs across your screen every few minutes. 👀👀👀👀👀👀👀👀 [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3828377061)
 - `llb_ball`: A working baseball from the game Lethal League Blaze. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=1932329430)
 - `map_randomizer`: Allows you to randomize textures in a map as well as error map textures. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=1851936315)
 - `no_viewmodel_sway`: Disables the built-in viewmodel sway entirely. [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2294303979)
