@@ -1,0 +1,6 @@
+{
+    "title": "Let's Take A Look...",
+    "type": "effects",
+    "tags": ["fun", "comic"],
+    "ignore": ["*.md", "*.gif"]
+}

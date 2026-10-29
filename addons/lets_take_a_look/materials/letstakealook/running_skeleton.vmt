@@ -1,0 +1,6 @@
+UnlitGeneric
+{
+    $basetexture "letstakealook/running_skeleton"
+    $frame 0
+    $alphatest 1
+}
